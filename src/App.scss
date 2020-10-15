@@ -32,6 +32,8 @@ body {
     color: grey;
   }
   .output {
+    display: flex;
+    flex-wrap: wrap;
     font-size: 2.0736em 
   }
 }

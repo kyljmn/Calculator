@@ -9,12 +9,12 @@ const Calculator = () => {
     const [output, setOutput] = useState(0);
     const operations = ['/', 'x', '+', '-']
     const operationRe = /(-?[0-9]+\.?[0-9]*)([/+\-x]?)(-?[0-9]+\.?[0-9]*)?/
+    const parsed = input.match(operationRe)
+    const first = parseFloat(parsed[1])
+    const operator = parsed[2]
+    const second = parseFloat(parsed[3])
     const buttonPress = (event) => {
         const value = event.target.value
-        const parsed = input.match(operationRe)
-        const first = parseFloat(parsed[1])
-        const operator = parsed[2]
-        const second = parseFloat(parsed[3])
         if (input === '0') {
             if ( isNaN(value) ) console.log('Invalid Operation')
             else setInput(value)
@@ -48,11 +48,6 @@ const Calculator = () => {
         }
     }
     useEffect(() => {
-        
-        const parsed = input.match(operationRe)
-        const first = parseFloat(parsed[1])
-        const second = parseFloat(parsed[3])
-        const operator = parsed[2]
         if(second) {
             switch (operator) {
                 case '+':
@@ -74,7 +69,7 @@ const Calculator = () => {
         } else {
             setOutput(first)
         }
-    }, [input, operationRe])
+    }, [input, operationRe, first, operator, second])
 
     return (
         <div className="calculator-body">
