@@ -24,7 +24,7 @@ const Calculator = () => {
             const float = parseInt(output) / 100;
             setInput(float.toString())
         } else if (value ==='+/-') {
-            const num = -1 * parseInt(output);
+            const num = -1 * parseFloat(output);
             setInput(num.toString())
         } else if (value === '.') {
             if (second)  {
