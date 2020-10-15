@@ -9,14 +9,21 @@ const Calculator = () => {
     const [output, setOutput] = useState(0);
     const operations = ['/', 'x', '+', '-']
     const operationRe = /(-?[0-9]+\.?[0-9]*)([/+\-x]?)(-?[0-9]+\.?[0-9]*)?/
-    const parsed = input.match(operationRe)
-    const first = parseFloat(parsed[1])
-    const operator = parsed[2]
-    const second = parseFloat(parsed[3])
+    
+    const inputParser = (input) => {
+        const parsed = input.match(operationRe)
+        const first = parseFloat(parsed[1])
+        const operator = parsed[2]
+        const second = parseFloat(parsed[3])
+        return { first, second, operator }
+    }
+
     const buttonPress = (event) => {
         const value = event.target.value
+        const { first, second, operator } = inputParser(input)
         if (input === '0') {
-            if ( isNaN(value) ) console.log('Invalid Operation')
+            if ( value === ".") setInput(input + value)
+            else if ( isNaN(value) ) console.log('Invalid Operation')
             else setInput(value)
         } else if (value === 'C') {
            setInput('0')
@@ -27,8 +34,8 @@ const Calculator = () => {
             const num = -1 * parseFloat(output);
             setInput(num.toString())
         } else if (value === '.') {
-            if (second)  {
-                Number.isInteger(second) ? setInput(input + value) : console.log('Already a float!')
+            if (second >= 0)  {
+                Number.isInteger(second) ? setInput(input + value) : console.log('Already a float!1')
             } else {
                 Number.isInteger(first) ? setInput(input + value) : console.log('Already a float!')
             }
@@ -48,6 +55,7 @@ const Calculator = () => {
         }
     }
     useEffect(() => {
+        const { first, second, operator } = inputParser(input)
         if(second) {
             switch (operator) {
                 case '+':
@@ -69,7 +77,7 @@ const Calculator = () => {
         } else {
             setOutput(first)
         }
-    }, [input, operationRe, first, operator, second])
+    }, [input, inputParser])
 
     return (
         <div className="calculator-body">
