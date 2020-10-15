@@ -21,7 +21,7 @@ const Calculator = () => {
         } else if (value === 'C') {
            setInput('0')
         } else if (value === '%') {
-            const float = parseInt(input) / 100;
+            const float = parseInt(output) / 100;
             setInput(float.toString())
         } else if (value ==='+/-') {
             const num = -1 * parseInt(output);
