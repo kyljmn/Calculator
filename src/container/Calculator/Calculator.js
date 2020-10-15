@@ -3,21 +3,21 @@ import Input from '../../components/Input/Input'
 import Keypad from '../../components/Keypad/Keypad'
 import Output from '../../components/Output/Output'
 
+const inputParser = (input) => {
+    const operationRe = /(-?[0-9]+\.?[0-9]*)([/+\-x]?)(-?[0-9]+\.?[0-9]*)?/
+    const parsed = input.match(operationRe)
+    const first = parseFloat(parsed[1])
+    const operator = parsed[2]
+    const second = parseFloat(parsed[3])
+    return { first, second, operator }
+}
 
 const Calculator = () => {
     const [input, setInput] = useState('0');
     const [output, setOutput] = useState(0);
     const operations = ['/', 'x', '+', '-']
-    const operationRe = /(-?[0-9]+\.?[0-9]*)([/+\-x]?)(-?[0-9]+\.?[0-9]*)?/
     
-    const inputParser = (input) => {
-        const parsed = input.match(operationRe)
-        const first = parseFloat(parsed[1])
-        const operator = parsed[2]
-        const second = parseFloat(parsed[3])
-        return { first, second, operator }
-    }
-
+    
     const buttonPress = (event) => {
         const value = event.target.value
         const { first, second, operator } = inputParser(input)
@@ -77,7 +77,7 @@ const Calculator = () => {
         } else {
             setOutput(first)
         }
-    }, [input, inputParser])
+    }, [input])
 
     return (
         <div className="calculator-body">
